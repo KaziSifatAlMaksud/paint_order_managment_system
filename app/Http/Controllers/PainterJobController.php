@@ -12,6 +12,7 @@ use App\Models\PoItems;
 use App\Models\PainterJob;
 use App\Models\Superviser;
 use App\Models\BuilderModel;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -91,15 +92,19 @@ class PainterJobController extends Controller
     public function create()
     {
         $painterJob = new PainterJob();
-        $buliders =  Builder::whereNotNull('name')->orderBy('name')->get();
+        // $buliders =  Builder::whereNotNull('name')->orderBy('name')->get();
         $data['inside'] = [];
         $data['outside'] = [];
         $brands = Brand::all();
         $order = Order::all();
-        $admin_buliders = BuilderModel::with('brand:id,name')->get();
+        $admin_buliders = BuilderModel::all();
         $supervisors = Superviser::all();
         $users = User::whereNotNull('first_name')->orderBy('first_name')->get();
-        return view('admin.painter_jobs.add', ['data' => $data, 'users' => $users, 'supervisors' => $supervisors, 'order' => $order, 'brands' => $brands, 'admin_buliders' => $admin_buliders, 'painterjob' => $painterJob, 'buliders' => $buliders, 'outside' => $this->outside, 'inside' => $this->inside]);
+        return view('admin.painter_jobs.add', [
+            'data' => $data, 'users' => $users, 'supervisors' => $supervisors, 'order' => $order, 'brands' => $brands, 'admin_buliders' => $admin_buliders, 'painterjob' => $painterJob,
+            // 'buliders' => $buliders, 
+            'outside' => $this->outside, 'inside' => $this->inside
+        ]);
     }
 
 
@@ -128,6 +133,7 @@ class PainterJobController extends Controller
     public function store(Request $request)
     {
         // $order = Order::where('id', $request->order_id)->first();
+
         $request->merge(['status' => 1]);
         $painterjob = new PainterJob();
         $data = $request->only($painterjob->getFillable());
@@ -137,8 +143,9 @@ class PainterJobController extends Controller
         $this->manageFile($request, 'colors_secound', $data, $painterjob);
         $this->manageFile($request, 'colors_spec', $data, $painterjob);
         $this->manageFile($request, 'plan_granny', $data, $painterjob);
-
-
+        if ($request->has('company_id')) {
+            $painterjob->builder_id = $request->company_id;
+        }
         $painterjob->fill($data)->save();
         if ($request->inside) {
             foreach ($request->inside as $oskey => $osvalue) {

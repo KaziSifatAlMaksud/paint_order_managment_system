@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::table('painter_jobs', function (Blueprint $table) {
             $table->integer('company_id')->nullable()->after('address');
-            $table->integer('supervisor_id')->nullable()->after('address');
+            $table->integer('supervisor_id')->nullable()->after('company_id'); // Put 'supervisor_id' after 'company_id'
+            # $table->integer('supervisor_id')->nullable()->after('address');
             //
         });
     }
@@ -28,7 +29,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('painter_jobs', function (Blueprint $table) {
-            $table->dropColumn(['company_id', 'company_id']);
+            $table->dropColumn(['company_id', 'supervisor_id']); // Drop both columns
+            #  $table->dropColumn(['company_id', 'company_id']);
         });
     }
 };

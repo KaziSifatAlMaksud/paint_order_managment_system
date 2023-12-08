@@ -62,9 +62,15 @@ require  public_path() . '/admin/header.blade.php';
                             <select name="company_id" id="builder_company" class="form-control brand">
                                 <option value="" selected>Select</option>
                                 @foreach ($admin_buliders as $admin_bulider)
-                                <option data-brand="{{ $admin_bulider->brand?$admin_bulider->brand->id : '0' }}" value="{{ $admin_bulider->id }}" {{ $admin_bulider->id == old('id', $painterjob->company_id) ? 'selected' : '' }}>{{ $admin_bulider->company_name}}</option>
+                                <option data-brand="{{ $admin_bulider->brand?$admin_bulider->brand->id : '0' }}" value="{{ $admin_bulider->id }}" {{ $admin_bulider->id == old('id', $painterjob->company_id) ? 'selected' : '' }}>{{ $admin_bulider->company_name }}</option>
                                 @endforeach
                             </select>
+                            {{-- <select name="company_id" id="builder_company" class="form-control brand">
+                                <option value="" selected>Select</option>
+                                @foreach ($admin_buliders as $admin_bulider)
+                                <option data-brand="{{ $admin_bulider->brand?$admin_bulider->brand->id : '0' }}" value="{{ $admin_bulider->id }}" {{ $admin_bulider->id == old('id', $painterjob->company_id) ? 'selected' : '' }}>{{ $admin_bulider->company_name}}</option>
+                                @endforeach
+                            </select> --}}
                         </div>
                     </div>
                 </div>

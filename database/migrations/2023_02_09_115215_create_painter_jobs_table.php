@@ -40,7 +40,7 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('shop_id')->references('id')->on('shop')->onDelete('set null');
-            $table->foreign('builder_id')->references('id')->on('builders')->onDelete('set null');
+            $table->foreign('builder_id')->references('id')->on('admin_builders')->onDelete('set null');
             $table->timestamps();
         });
     }

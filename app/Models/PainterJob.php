@@ -121,9 +121,9 @@ class PainterJob extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function builder()
+    public function Builder()
     {
-        return $this->belongsTo(Builder::class, 'builder_id');
+        return $this->belongsTo(BuilderModel::class, 'builder_id');
     }
     public function users()
     {
