@@ -13,7 +13,7 @@
 		<header>
 			<div class="header-row">
 				<div class="header-item">
-				 <a href="<?php echo '/main' ?>"> <i class="fa-solid fa-arrow-left"></i> </a>	
+				 <a href="<?php echo '/invoice' ?>"> <i class="fa-solid fa-arrow-left"></i> </a>	
 					<span> Create Invoice </span>
 					<a href="<?php echo '/main' ?>">   <img src="/image/logo-phone.png" alt="Logo"> </a>   
 				</div>
@@ -30,6 +30,13 @@
             </div>
         @endif
 {{-- {{$jobs}} --}}
+    @if(session('go_back'))
+            <script>
+               setTimeout(function() {
+            window.history.go(-2); 
+            }, 1000); 
+            </script>
+        @endif
         
         <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data">
              @csrf 
@@ -42,11 +49,11 @@
                         <input type="hidden" name="selected_type" id="selectedType" value="">
                         <select name="customer_id" class="custom-input" id="customerSelect">
                             <option value="" disabled selected>Select a Customer</option>
-                             <optgroup label="Buliders" disabled> </optgroup>
+                             {{-- <optgroup label="Buliders" disabled> </optgroup> --}}
                             @foreach($admin_buliders as $admin_bulider)
                                 <option value="{{ $admin_bulider->company_name}}"  data-email="{{ $admin_bulider->builder_email }}">{{ $admin_bulider->company_name }}</option>
                             @endforeach
-                             <optgroup label="Customers" disabled> </optgroup>
+                             {{-- <optgroup label="Customers" disabled> </optgroup> --}}
                             @foreach($customers as $customer)
                                 <option value="{{ $customer->name }}" data-email="{{ $customer->email }}">{{ $customer->name }}</option>
                             @endforeach

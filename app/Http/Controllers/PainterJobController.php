@@ -201,6 +201,7 @@ class PainterJobController extends Controller
      */
     public function edit(PainterJob $painterJob)
     {
+
         $items = $painterJob->items()->get();
         $data['inside'] = [];
         $data['outside'] = [];
@@ -234,6 +235,11 @@ class PainterJobController extends Controller
         $this->manageFile($request, 'colors_secound', $data, $painterJob);
         $this->manageFile($request, 'colors_spec', $data, $painterJob);
         $this->manageFile($request, 'plan_granny', $data, $painterJob);
+
+        if ($request->has('company_id')) {
+            $painterJob->builder_id = $request->company_id;
+        }
+
 
         $painterJob->fill($data)->save();
         $painterJob->items()->delete();

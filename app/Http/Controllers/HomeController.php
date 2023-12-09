@@ -50,7 +50,7 @@ class HomeController extends Controller
     public function main(Request $request)
     {
         $company_name = $request->user()->company_name;
-        $jobs = PainterJob::with('gallaryPlan', 'builder', 'superviser', 'poitem', 'users')
+        $jobs = PainterJob::with('gallaryPlan', 'admin_builders', 'superviser', 'poitem', 'users')
             ->where('user_id', $request->user()->id)
             ->whereNull('parent_id')
             ->get();
@@ -79,7 +79,7 @@ class HomeController extends Controller
     {
         $customers = Customer::all()->where('user_id', $request->user()->id);
         $admin_buliders = BuilderModel::all();
-        $jobs = PainterJob::with('gallaryPlan', 'builder', 'superviser', 'poitem')
+        $jobs = PainterJob::with('gallaryPlan', 'admin_builders', 'superviser', 'poitem')
             ->where('user_id', $request->user()->id)
             ->whereNull('parent_id')
             ->get();
@@ -121,7 +121,7 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        $job = PainterJob::with('GallaryPlan', 'builder')->find($id);
+        $job = PainterJob::with('GallaryPlan', 'admin_builders')->find($id);
 
         if (!$job) {
             abort(404);

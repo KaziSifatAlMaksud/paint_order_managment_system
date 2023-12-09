@@ -84,6 +84,7 @@ require  public_path() . '/painter/header.php';
                                                     <label for="company_name">Company Name</label>
                                                 </div>
                                             </div>
+                                          
                                             <button type="sumbit" class="btn-orange large btn w-100">Update</button>
                             </form>
                         </div>

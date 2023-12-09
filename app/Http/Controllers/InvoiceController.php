@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\PainterJob;
 use App\Models\PoItems;
+use App\Models\User;
 use GuzzleHttp\Psr7\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
@@ -52,8 +53,16 @@ class InvoiceController extends Controller
 
         if ($request->input('action') == 'send&save') {
             // Prepare data for the PDF
+
+            $painterUser = $request->user();
+            $user = User::find($painterUser->id);
+            $company_name = $user->company_name;
+            $user_address = $user->address;
+
             $data = [
-                'user_id' => $user_id,
+                'user_id' => $request->user()->id,
+                'company_name' =>  $company_name,
+                'user_address' =>  $user_address,
                 'customer_id' => $request->customer_id,
                 'send_email' => $request->send_email,
                 'inv_number' =>  $request->inv_number,
@@ -94,7 +103,7 @@ class InvoiceController extends Controller
 
                 $invoice = Invoice::create($validatedData);
                 // $poitem = Poitem::find($poitemId);
-                return redirect()->back()->with('success', 'Invoice created successfully.');
+                return redirect()->back()->with('go_back', true)->with('success', 'Invoice created & Send successfully.');
             } catch (\Exception $e) {
                 // Handle the exception
                 return response()->json(['error' => $e->getMessage()], 500);
@@ -107,7 +116,7 @@ class InvoiceController extends Controller
                 $validatedData['attachment'] = $request->file('attachment')->storeAs('', $fileName, 'public');
             }
             $invoice = Invoice::create($validatedData);
-            return redirect()->back()->with('success', 'Invoice created successfully.');
+            return redirect()->back()->with('go_back', true)->with('success', 'Invoice created successfully.');
         }
     }
 
@@ -148,8 +157,17 @@ class InvoiceController extends Controller
         if ($request->input('action') == 'send&save') {
 
             // Prepare data for the PDF
+
+            $painterUser = $request->user();
+            $user = User::find($painterUser->id);
+            $company_name = $user->company_name;
+            $user_address = $user->address;
+
+
             $data = [
                 'user_id' => $request->user()->id,
+                'company_name' =>  $company_name,
+                'user_address' =>  $user_address,
                 'customer_id' => $request->customer_id,
                 'send_email' => $request->send_email,
                 'inv_number' =>  $request->inv_number,
@@ -222,10 +240,15 @@ class InvoiceController extends Controller
 
         if ($request->input('action') == 'send') {
 
-
+            $painterUser = $request->user();
+            $user = User::find($painterUser->id);
+            $company_name = $user->company_name;
+            $user_address = $user->address;
             // Prepare data for the PDF
             $data = [
                 'user_id' => $request->user()->id,
+                'company_name' => $company_name,
+                'user_address' => $user_address,
                 'customer_id' => $request->customer_id,
                 'send_email' => $request->send_email,
                 'inv_number' =>  $request->inv_number,
@@ -402,10 +425,15 @@ class InvoiceController extends Controller
 
         if ($request->input('action') == 'send') {
 
-
+            $painterUser = $request->user();
+            $user = User::find($painterUser->id);
+            $company_name = $user->company_name;
+            $user_address = $user->address;
             // Prepare data for the PDF
             $data = [
                 'user_id' => $request->user()->id,
+                'company_name' => $company_name,
+                'user_address' => $user_address,
                 'customer_id' => $request->customer_id,
                 'send_email' => $request->send_email,
                 'inv_number' =>  $request->inv_number,

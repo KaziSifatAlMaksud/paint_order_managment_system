@@ -125,9 +125,9 @@
                                         <li class="custom-list-item">
                                             <img class="cardicon" src="{{asset('/image/icon1/Building.png') }}" alt="">
                                             <span class="text">
-                                                 @if($job->builder)
-                                                    {{ $job->builder->name }}
-                                                 @endif                                               
+                                             @if($job->builder_id && $job->admin_builders && !is_bool($job->admin_builders))
+                                                    {{ $job->admin_builders->company_name }}
+                                             @endif                                           
                                             </span>
                                         </li>
                                         <li class="custom-list-item">
@@ -152,12 +152,15 @@
                             <ul>
                           
 
-                                <li class="text-right font-weight-bold mb-4"style="color: gray;padding-top:5px;"> Gate Code: 
-                                @foreach ($admin_builders as $admin_builder)
+                                <li class="text-right font-weight-bold mb-4"style="color: gray;padding-top:5px;"> Gate Code:
+                                    @if($job->builder_id && $job->admin_builders && !is_bool($job->admin_builders))
+                                                    {{ $job->admin_builders->gate }}
+                                    @endif  
+                                {{-- @foreach ($admin_builders as $admin_builder)
                                 @if (isset($job->builder) && strtolower($job->builder->name) == strtolower($admin_builder->company_name))
                                     {{ $admin_builder->gate }}
                                 @endif
-                                @endforeach </li>
+                                @endforeach </li> --}}
                                 <li class="text-right font-weight-bold">Start: <br> {{date('j M, Y', strtotime($job->start_date))}}  </li>
                             </ul>                         
                         </div>

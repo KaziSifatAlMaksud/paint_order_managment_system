@@ -93,11 +93,11 @@ tr:nth-child(even) {
 
     <div class="container">
         <div class="brand-section">
-             <h1 style="color: #5086e6">  Final Coat</h1>
+             <h1 style="color: #5086e6">{{$company_name}}</h1>
             <div class="row">
                 <div class="col-6">                   
-                        <p >56 Myall st Concord</p>
-                        <p >ABN 83094324633</p>
+                        <p >{{$user_address}}</p>
+                        <p >ABN: --</p>
                         <p>Gus: 0405701954</p>                    
                 </div>
                  <div class="col-6" >                    

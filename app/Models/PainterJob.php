@@ -121,10 +121,14 @@ class PainterJob extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function Builder()
+    public function admin_builders()
     {
         return $this->belongsTo(BuilderModel::class, 'builder_id');
     }
+    // public function Builder()
+    // {
+    //     return $this->belongsTo(BuilderModel::class, 'builder_id');
+    // }
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
